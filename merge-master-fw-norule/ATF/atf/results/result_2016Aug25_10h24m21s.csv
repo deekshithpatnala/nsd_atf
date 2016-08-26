@@ -1,0 +1,6 @@
+TCID, Status, Failure Reason
+service_insertion_project_VYOS_E-W_FW-NORULE_841, FAIL, Problem while creating Policy Target Group: provider
+
+Total testcases : 1
+Testcases passed : 0
+Testcases failed : 1

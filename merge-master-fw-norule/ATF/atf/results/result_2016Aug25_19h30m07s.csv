@@ -1,0 +1,6 @@
+TCID, Status, Failure Reason
+service_insertion_project_VYOS_E-W_FW-NORULE_841, FAIL, Error: None traffic not allowed on port : NA, service: FW, ip: 11.0.1.1.  None traffic on port: NA is not allowed on provider vm: 11.0.1.3. ERROR: udp traffic on port : 50003 is allowed in service: FW, ip: 11.0.1.1. ERROR: udp traffic on port : 50003 is allowed in vm: 11.0.1.3. ERROR: icmp traffic on port : NA is allowed in service: FW, ip: 11.0.1.1. ERROR: icmp traffic on port : NA is allowed in vm: 11.0.1.3. ERROR: tcp traffic on port : 50001 is allowed in service: FW, ip: 11.0.1.1. ERROR: tcp traffic on port : 50001 is allowed in vm: 11.0.1.3. 
+
+Total testcases : 1
+Testcases passed : 0
+Testcases failed : 1

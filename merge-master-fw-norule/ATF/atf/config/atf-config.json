@@ -1,0 +1,57 @@
+{
+    "ATF-EXECUTION-NODE": {
+        "test_execution_node_ip": "192.168.2.74"
+    }, 
+    "CLOUD-ADMIN-CREDENTIALS": {
+        "cloud_admin_domain": "default", 
+        "cloud_admin_passwd": "mysecret", 
+        "cloud_admin_project": "admin", 
+        "cloud_admin_user": "admin", 
+        "cloud_admin_user_role": "admin", 
+        "keystone_api_version": "v2"
+    }, 
+    "COMPUTE-NODE-1": {
+        "datapath": "192.168.20.22", 
+        "hostname": "stack", 
+        "mgmtip": "192.168.20.22", 
+        "password": "stack123", 
+        "username": "stack"
+    }, 
+    "EXT-NET": {
+        "ext_segment_name": "default", 
+        "extnet_name": "ext-net"
+    }, 
+    "IMAGE-DETAILS": {
+        "flavor_name": "m1.small", 
+        "image_name": "sungard_client", 
+        "image_pass": "root123", 
+        "image_user": "root"
+    }, 
+    "NFP": {
+        "nfp_model": "advanced"
+    }, 
+    "OS-CONTROLLER-NODE": {
+        "mgmtip": "192.168.20.22", 
+        "password": "stack123", 
+        "pubip": "192.168.20.22", 
+        "username": "stack"
+    }, 
+    "SERVICE-PROFILE-NAMES": {
+        "asav_fw": "asav_fw", 
+        "asav_fw_ha": "asav_fw_ha", 
+        "asav_vpn": "asav_vpn", 
+        "asav_vpn_ha": "asav_vpn_ha", 
+        "lb_v1": "lb_profile", 
+        "lb_v1_ha": "haproxy_lb_ha_sh", 
+        "lb_v2": "lbv2_profile", 
+        "lb_v2_ha": "haproxy_lb_ha_sh", 
+        "paloalto_fw": "paloalto_fw_profile", 
+        "paloalto_fw_ha": "paloalto_fw_ha", 
+        "paloalto_vpn": "paloalto_vpn", 
+        "paloalto_vpn_ha": "paloalto_vpn_ha", 
+        "vyos_fw": "vyos_fw_profile", 
+        "vyos_fw_ha": "vyos_fw_ha", 
+        "vyos_vpn": "VPN", 
+        "vyos_vpn_ha": "vyos_vpn_ha"
+    }
+}

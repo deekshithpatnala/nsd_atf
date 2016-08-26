@@ -1,0 +1,46 @@
+Assumptions:
+------------
+1) 	The current ATF implementation does not assume OS controller and network
+	node clustering/HA. It works with single OS controller and network node.
+2) 	The ATF should be triggered from root user. This is to allow the ATF to
+	create the result and log files.
+
+----------------
+ Pre-requisites |
+----------------
+1) 	ATF should be triggered from a node which has access to management network
+	and OS controller public IP. 
+2) 	sungard_client image should be available and loaded in the glance images.
+3) 	The node from where the ATF shall be initiated should have the following
+	packages installed
+	- python-paramiko  (version >= 1.15.1-1)
+	- python-pexpect
+
+------------
+ ATF Usage  |
+------------
+1)	Copy the ATF code to the initiator node.
+2)	Execute the following steps only once, initially
+	- Modify atf-config.ini file in ~/atf/config directory with setup specific,
+	  image and other details.
+	- Go to ~/atf/util directory and run 'config-atf.py' script to update the
+	  config files with the data. 
+4)	Update the test_cases.txt file in ~/atf directory with the test cases to
+	be executed as part of automation run.
+5)	Start automation execution by running the following command in
+	~/atf directory
+		python run_automation.py
+		
+-----
+Note |
+----- 
+	- test_cases.txt file should be updated by providing the test case numbers
+	  as mentioned in the below example
+		gbp_cruds(1-13)
+		service_insertion(1-11, 45-55)
+	- Test case numbers can be given as a range when they are consecutive test
+	  cases or individual numbers and combinations of range and individual test
+	  case numbers as well.
+	- Test case number to test case ID mappings can be found in
+	  testcase_mappings.txt file. 
+

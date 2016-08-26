@@ -1,0 +1,73 @@
+#########################################################################
+# One Convergence, Inc. CONFIDENTIAL
+# Copyright (c) 2012-2014, One Convergence, Inc., USA
+# All Rights Reserved.
+#
+# All information contained herein is, and remains the property of
+# One Convergence, Inc. and its suppliers, if any. The intellectual and
+# technical concepts contained herein are proprietary to One Convergence,
+# Inc. and its suppliers.
+#
+# Dissemination of this information or reproduction of this material is
+# strictly forbidden unless prior written permission is obtained from
+# One Convergence, Inc., USA
+#########################################################################
+
+
+#########################################################################
+# NOTE:
+# After test feature name (e.g. gbp_cruds & service_insertion) in circular
+# brackets user have to provide test cases numbers.
+# Each test case number is mapped to unique test case id.
+# Get test case number to test case id mapping in testcase_mappings.txt
+# By default file is configured to run all test cases.
+# Below sample examples are given for running specific test cases.
+# e.g. 
+#    1. if user want to execute test cases from 1 to 13.
+#       gbp_cruds(1-13)
+#    2. if user want run 4th, 9th test cases.
+#       gbp_cruds(4,9)
+#    3. if user want to run 3rd, 7th and test cases from 10 to 13.
+#	    gbp_cruds(3,7,10-13)
+##########################################################################
+
+
+# test feature for validating gbp crud api's.
+# gbp_cruds(1-13)
+
+# test feature for validating service insertion functional test cases.
+#service_insertion(1-13, 17-29, 33-45, 65-77, 97-109, 113-125, 129-141, 161-173, 577-588)
+#service_insertion(1, 11, 33, 43, 65, 75, 577, 580)
+#service_insertion(1-13, 33-48, 65-80, 577-582)
+service_insertion(841)
+#service_insertion(793-840)
+
+# test feature for validating gbp resources update test cases.
+#resource_update(1-15)
+
+# test feature for validating multiple service insertions test cases.
+#multiple_insertion(1)
+
+# test feature for validating network services HA functionality.
+#services_ha(1-48) 
+
+# test cases for multiple chain insertion with/without HA
+#multiple_chain(1-30)
+
+###########################################################################
+# Stress tests feature will execute tests belonging to different test
+# features (e.g. service_insertion, services_ha, multiple_chain, gbp_cruds)
+# in parallel, for applying stress on service controller, by doing several
+# parallel service insertion.
+###########################################################################
+# NOTE:- 
+#      a. Running stress tests for test feature service_insertion.
+#        stress tests [1-600] mapped to service_insertion tests[1-600]
+#          e.g.
+#          	 1. stress_test(1-600)
+#          	 2. stress_test(1-10,56,555-600)
+#      b. To running stress tests for features like services_ha, multiple_chain,
+#          gbp_cruds, go through text file testcase_mappings.txt
+##########################################################################
+#stress_test(1-3)
+#stress_test(1-600,601-648, 649-678,679-691)

@@ -1,0 +1,1018 @@
+#####################################################################
+GBP rest api validation tests. Feature Name: gbp_cruds
+#####################################################################
+
+1	 ==> 	gbp_crud_service_chain_node
+2	 ==> 	gbp_crud_service_chain_spec
+3	 ==> 	gbp_crud_policy_action
+4	 ==> 	gbp_crud_policy_classifier
+5	 ==> 	gbp_crud_policy_rule
+6	 ==> 	gbp_crud_policy_rule_set
+7	 ==> 	gbp_crud_l3_policy
+8	 ==> 	gbp_crud_l2_policy
+9	 ==> 	gbp_crud_policy_target_group
+10	 ==> 	gbp_crud_policy_target
+11	 ==> 	gbp_crud_network_service_policy
+12	 ==> 	gbp_crud_external_segment
+13	 ==> 	gbp_crud_external_policy
+
+###################### End of gbp crud tests #######################
+
+
+
+##########################################################################
+Service Insertion functional test cases. Feature Name: service_insertion
+##########################################################################
+
+
+To find the scenario and its corresponding tc id see the QUICK HELP.
+
+===========
+QUICK HELP:
+===========
+
+=====================================================================>
+VYOS: [1-192]
+============
+	-Project Scope: [1-96]
+		-East-West Scenario: [1-16]
+
+			-Firewall: [1-10]
+				TCP Specific Port:  1
+				TCP range of ports: 2
+				UDP specific Port:  3
+				UDP Range of Ports: 4
+				ICMP:		    5
+				HTTP:		    6
+				HTTPS:		    7
+				SMTP:		    8
+				DNS:		    9
+				FTP:		    10
+
+			-Firewall + LoadBalancer (v1): 11-13
+				TCP Specific Port:  11
+				HTTP:		    12
+				HTTPS:		    13
+			-Firewall + LoadBalancer (v2): 14-16
+				TCP Specific Port:  14
+				HTTP:		    15
+				HTTPS:		    16
+			
+		-North-South Scenario: [17-32]
+			-Firewall: [17-26]
+			-Firewall + LoadBalancer: [27-32]
+
+		-North-South With Site to Site VPN Scenario: [33-48]
+			- VPN: [33-42]
+			- VPN + LoadBalancer: [43-48]
+		
+		-North-South With REMOTE VPN Scenario: [49-64]		
+			- VPN: [49-58]
+			- VPN + LoadBalancer: [59-64]
+
+		-North-South With Site to Site VPN + FW Scenario: [65-80]
+			- VPN + Firewall: [65-74]
+			- VPN + Firewall + LoadBalancer: [75-80]
+		
+		-North-South With REMOTE VPN + FW Scenario: [81-96]		
+			- VPN + Firewall: [81-90]
+			- VPN + Firewall + LoadBalancer: [91-96]
+
+	-Shared [97-192]	
+		# NOTE: Add 96 to each corresponding project scope test case.
+		
+ASAV: [193-384]
+===============
+	# NOTE: Add 192 to each VYOS test case.
+	
+PaloAlto: [385-576]
+===================
+    # NOTE: Add 384 to each VYOS test case.
+
+ONLY LB: [577-600]
+==================
+	- Version 1 [577-588]
+        -Project Scope: [577-582]
+                -East-West Scenario: [577-579]
+                         TCP Specific Port:  577
+                         HTTP:               578
+                         HTTPS:              579
+                -North-South Scenario: [580-582]
+                      # NOTE: Add 3 to each East-West test case.
+
+        -Shared [583-588]
+                # NOTE: Add 6 to each Project Scope test case.
+
+	- Version 2 [589-600]
+		Add 12 to each corresponding version 1 scenario.
+
+
+NOTE:
+=====
+Project Scope: The resources are created as part of the project.
+Sharable: The service chain spec and node are created by the admin and
+		  being sharable by the project.
+
+
+<======================================================================
+
+
+
+TC NO           TC ID
+======    =================
+
+############      Vyos scenarios from 1-192    ######################
+
+# VYOS Image, Project Scope, East-West with only Firewall: [1-10]
+
+1  =====> service_insertion_project_VYOS_E-W_FW_TCP_PORT_1
+2  =====> service_insertion_project_VYOS_E-W_FW_TCP_RANGE_2
+3  =====> service_insertion_project_VYOS_E-W_FW_UDP_PORT_3
+4  =====> service_insertion_project_VYOS_E-W_FW_UDP_RANGE_4
+5  =====> service_insertion_project_VYOS_E-W_FW_ICMP_5
+6  =====> service_insertion_project_VYOS_E-W_FW_HTTP_6
+7  =====> service_insertion_project_VYOS_E-W_FW_HTTPS_7
+8  =====> service_insertion_project_VYOS_E-W_FW_SMTP_8
+9  =====> service_insertion_project_VYOS_E-W_FW_DNS_9
+10  =====> service_insertion_project_VYOS_E-W_FW_FTP_10
+
+# VYOS Image, Project Scope, East-West with Firewall + Loadbalancer: [11-16]
+
+11  =====> service_insertion_project_VYOS_E-W_FW+LB(V1)_TCP_PORT_11
+12  =====> service_insertion_project_VYOS_E-W_FW+LB(V1)_HTTP_12
+13  =====> service_insertion_project_VYOS_E-W_FW+LB(V1)_HTTPS_13
+14  =====> service_insertion_project_VYOS_E-W_FW+LB(V2)_TCP_PORT_14
+15  =====> service_insertion_project_VYOS_E-W_FW+LB(V2)_HTTP_15
+16  =====> service_insertion_project_VYOS_E-W_FW+LB(V2)_HTTPS_16
+
+# VYOS Image, Project Scope, North-South with only Firewall: [17-26]
+
+17  =====> service_insertion_project_VYOS_N-S_FW_TCP_PORT_17
+18  =====> service_insertion_project_VYOS_N-S_FW_TCP_RANGE_18
+19  =====> service_insertion_project_VYOS_N-S_FW_UDP_PORT_19
+20  =====> service_insertion_project_VYOS_N-S_FW_UDP_RANGE_20
+21  =====> service_insertion_project_VYOS_N-S_FW_ICMP_21
+22  =====> service_insertion_project_VYOS_N-S_FW_HTTP_22
+23  =====> service_insertion_project_VYOS_N-S_FW_HTTPS_23
+24  =====> service_insertion_project_VYOS_N-S_FW_SMTP_24
+25  =====> service_insertion_project_VYOS_N-S_FW_DNS_25
+26  =====> service_insertion_project_VYOS_N-S_FW_FTP_26
+
+# VYOS Image, Project Scope, North-South with Firewall + Loadbalancer: [27-32]
+
+27  =====> service_insertion_project_VYOS_N-S_FW+LB(V1)_TCP_PORT_27
+28  =====> service_insertion_project_VYOS_N-S_FW+LB(V1)_HTTP_28
+29  =====> service_insertion_project_VYOS_N-S_FW+LB(V1)_HTTPS_29
+30  =====> service_insertion_project_VYOS_N-S_FW+LB(V2)_TCP_PORT_30
+31  =====> service_insertion_project_VYOS_N-S_FW+LB(V2)_HTTP_31
+32  =====> service_insertion_project_VYOS_N-S_FW+LB(V2)_HTTPS_32
+
+# VYOS Image, Project Scope, North-South with Site to Site Only VPN: [33-42]
+
+33  =====> service_insertion_project_VYOS_N-S_S2S_VPN_TCP_PORT_33
+34  =====> service_insertion_project_VYOS_N-S_S2S_VPN_TCP_RANGE_34
+35  =====> service_insertion_project_VYOS_N-S_S2S_VPN_UDP_PORT_35
+36  =====> service_insertion_project_VYOS_N-S_S2S_VPN_UDP_RANGE_36
+37  =====> service_insertion_project_VYOS_N-S_S2S_VPN_ICMP_37
+38  =====> service_insertion_project_VYOS_N-S_S2S_VPN_HTTP_38
+39  =====> service_insertion_project_VYOS_N-S_S2S_VPN_HTTPS_39
+40  =====> service_insertion_project_VYOS_N-S_S2S_VPN_SMTP_40
+41  =====> service_insertion_project_VYOS_N-S_S2S_VPN_DNS_41
+42  =====> service_insertion_project_VYOS_N-S_S2S_VPN_FTP_42
+
+# VYOS Image, Project Scope, North-South with Site to Site VPN + Loadbalancer: [43-48]
+
+43  =====> service_insertion_project_VYOS_N-S_S2S_VPN+LB(V1)_TCP_PORT_43
+44  =====> service_insertion_project_VYOS_N-S_S2S_VPN+LB(V1)_HTTP_44
+45  =====> service_insertion_project_VYOS_N-S_S2S_VPN+LB(V1)_HTTPS_45
+46  =====> service_insertion_project_VYOS_N-S_S2S_VPN+LB(V2)_TCP_PORT_46
+47  =====> service_insertion_project_VYOS_N-S_S2S_VPN+LB(V2)_HTTP_47
+48  =====> service_insertion_project_VYOS_N-S_S2S_VPN+LB(V2)_HTTPS_48
+
+# VYOS Image, Project Scope, North-South with REMOTE VPN: [49-58]
+
+49  =====> service_insertion_project_VYOS_N-S_REMOTE_VPN_TCP_PORT_49
+50  =====> service_insertion_project_VYOS_N-S_REMOTE_VPN_TCP_RANGE_50
+51  =====> service_insertion_project_VYOS_N-S_REMOTE_VPN_UDP_PORT_51
+52  =====> service_insertion_project_VYOS_N-S_REMOTE_VPN_UDP_RANGE_52
+53  =====> service_insertion_project_VYOS_N-S_REMOTE_VPN_ICMP_53
+54  =====> service_insertion_project_VYOS_N-S_REMOTE_VPN_HTTP_54
+55  =====> service_insertion_project_VYOS_N-S_REMOTE_VPN_HTTPS_55
+56  =====> service_insertion_project_VYOS_N-S_REMOTE_VPN_SMTP_56
+57  =====> service_insertion_project_VYOS_N-S_REMOTE_VPN_DNS_57
+58  =====> service_insertion_project_VYOS_N-S_REMOTE_VPN_FTP_58
+
+# VYOS Image, Project Scope, North-South with REMOTE VPN + Loadbalancer: [59-64]
+
+59  =====> service_insertion_project_VYOS_N-S_REMOTE_VPN+LB(V1)_TCP_PORT_59
+60  =====> service_insertion_project_VYOS_N-S_REMOTE_VPN+LB(V1)_HTTP_60
+61  =====> service_insertion_project_VYOS_N-S_REMOTE_VPN+LB(V1)_HTTPS_61
+62  =====> service_insertion_project_VYOS_N-S_REMOTE_VPN+LB(V2)_TCP_PORT_62
+63  =====> service_insertion_project_VYOS_N-S_REMOTE_VPN+LB(V2)_HTTP_63
+64  =====> service_insertion_project_VYOS_N-S_REMOTE_VPN+LB(V2)_HTTPS_64
+
+# VYOS Image, Project Scope, North-South with Site to Site VPN + FW: [65-74]
+
+65  =====> service_insertion_project_VYOS_N-S_S2S_VPN+FW_TCP_PORT_65
+66  =====> service_insertion_project_VYOS_N-S_S2S_VPN+FW_TCP_RANGE_66
+67  =====> service_insertion_project_VYOS_N-S_S2S_VPN+FW_UDP_PORT_67
+68  =====> service_insertion_project_VYOS_N-S_S2S_VPN+FW_UDP_RANGE_68
+69  =====> service_insertion_project_VYOS_N-S_S2S_VPN+FW_ICMP_69
+70  =====> service_insertion_project_VYOS_N-S_S2S_VPN+FW_HTTP_70
+71  =====> service_insertion_project_VYOS_N-S_S2S_VPN+FW_HTTPS_71
+72  =====> service_insertion_project_VYOS_N-S_S2S_VPN+FW_SMTP_72
+73  =====> service_insertion_project_VYOS_N-S_S2S_VPN+FW_DNS_73
+74  =====> service_insertion_project_VYOS_N-S_S2S_VPN+FW_FTP_74
+
+# VYOS Image, Project Scope, North-South with Site to Site VPN + FW + Loadbalancer: [75-80]
+75  =====> service_insertion_project_VYOS_N-S_S2S_VPN+FW+LB(V1)_TCP_PORT_75
+76  =====> service_insertion_project_VYOS_N-S_S2S_VPN+FW+LB(V1)_HTTP_76
+77  =====> service_insertion_project_VYOS_N-S_S2S_VPN+FW+LB(V1)_HTTPS_77
+78  =====> service_insertion_project_VYOS_N-S_S2S_VPN+FW+LB(V2)_TCP_PORT_78
+79  =====> service_insertion_project_VYOS_N-S_S2S_VPN+FW+LB(V2)_HTTP_79
+80  =====> service_insertion_project_VYOS_N-S_S2S_VPN+FW+LB(V2)_HTTPS_80
+
+# VYOS Image, Project Scope, North-South with Remote VPN + FW: [81-90]
+
+81  =====> service_insertion_project_VYOS_N-S_REMOTE_VPN+FW_TCP_PORT_81
+82  =====> service_insertion_project_VYOS_N-S_REMOTE_VPN+FW_TCP_RANGE_82
+83  =====> service_insertion_project_VYOS_N-S_REMOTE_VPN+FW_UDP_PORT_83
+84  =====> service_insertion_project_VYOS_N-S_REMOTE_VPN+FW_UDP_RANGE_84
+85  =====> service_insertion_project_VYOS_N-S_REMOTE_VPN+FW_ICMP_85
+86  =====> service_insertion_project_VYOS_N-S_REMOTE_VPN+FW_HTTP_86
+87  =====> service_insertion_project_VYOS_N-S_REMOTE_VPN+FW_HTTPS_87
+88  =====> service_insertion_project_VYOS_N-S_REMOTE_VPN+FW_SMTP_88
+89  =====> service_insertion_project_VYOS_N-S_REMOTE_VPN+FW_DNS_89
+90  =====> service_insertion_project_VYOS_N-S_REMOTE_VPN+FW_FTP_90
+
+# VYOS Image, Project Scope, North-South with Remote VPN + FW + Loadbalancer: [90-96]
+91  =====> service_insertion_project_VYOS_N-S_REMOTE_VPN+FW+LB(V1)_TCP_PORT_91
+92  =====> service_insertion_project_VYOS_N-S_REMOTE_VPN+FW+LB(V1)_HTTP_92
+93  =====> service_insertion_project_VYOS_N-S_REMOTE_VPN+FW+LB(V1)_HTTPS_93
+94  =====> service_insertion_project_VYOS_N-S_REMOTE_VPN+FW+LB(V2)_TCP_PORT_94
+95  =====> service_insertion_project_VYOS_N-S_REMOTE_VPN+FW+LB(V2)_HTTP_95
+96  =====> service_insertion_project_VYOS_N-S_REMOTE_VPN+FW+LB(V2)_HTTPS_96
+
+###### Vyos Image with sharable scenarios from 97-192  ######
+
+97  =====> service_insertion_shared_VYOS_E-W_FW_TCP_PORT_97
+98  =====> service_insertion_shared_VYOS_E-W_FW_TCP_RANGE_98
+99  =====> service_insertion_shared_VYOS_E-W_FW_UDP_PORT_99
+100  =====> service_insertion_shared_VYOS_E-W_FW_UDP_RANGE_100
+101  =====> service_insertion_shared_VYOS_E-W_FW_ICMP_101
+102  =====> service_insertion_shared_VYOS_E-W_FW_HTTP_102
+103  =====> service_insertion_shared_VYOS_E-W_FW_HTTPS_103
+104  =====> service_insertion_shared_VYOS_E-W_FW_SMTP_104
+105  =====> service_insertion_shared_VYOS_E-W_FW_DNS_105
+106  =====> service_insertion_shared_VYOS_E-W_FW_FTP_106
+
+107  =====> service_insertion_shared_VYOS_E-W_FW+LB(V1)_TCP_PORT_107
+108  =====> service_insertion_shared_VYOS_E-W_FW+LB(V1)_HTTP_108
+109  =====> service_insertion_shared_VYOS_E-W_FW+LB(V1)_HTTPS_109
+110  =====> service_insertion_shared_VYOS_E-W_FW+LB(V2)_TCP_PORT_110
+111  =====> service_insertion_shared_VYOS_E-W_FW+LB(V2)_HTTP_111
+112  =====> service_insertion_shared_VYOS_E-W_FW+LB(V2)_HTTPS_112
+
+113  =====> service_insertion_shared_VYOS_N-S_FW_TCP_PORT_113
+114  =====> service_insertion_shared_VYOS_N-S_FW_TCP_RANGE_114
+115  =====> service_insertion_shared_VYOS_N-S_FW_UDP_PORT_115
+116  =====> service_insertion_shared_VYOS_N-S_FW_UDP_RANGE_116
+117  =====> service_insertion_shared_VYOS_N-S_FW_ICMP_117
+118  =====> service_insertion_shared_VYOS_N-S_FW_HTTP_118
+119  =====> service_insertion_shared_VYOS_N-S_FW_HTTPS_119
+120  =====> service_insertion_shared_VYOS_N-S_FW_SMTP_120
+121  =====> service_insertion_shared_VYOS_N-S_FW_DNS_121
+122  =====> service_insertion_shared_VYOS_N-S_FW_FTP_122
+
+123  =====> service_insertion_shared_VYOS_N-S_FW+LB(V1)_TCP_PORT_123
+124  =====> service_insertion_shared_VYOS_N-S_FW+LB(V1)_HTTP_124
+125  =====> service_insertion_shared_VYOS_N-S_FW+LB(V1)_HTTPS_125
+126  =====> service_insertion_shared_VYOS_N-S_FW+LB(V2)_TCP_PORT_126
+127  =====> service_insertion_shared_VYOS_N-S_FW+LB(V2)_HTTP_127
+128  =====> service_insertion_shared_VYOS_N-S_FW+LB(V2)_HTTPS_128
+
+129  =====> service_insertion_shared_VYOS_N-S_S2S_VPN_TCP_PORT_129
+130  =====> service_insertion_shared_VYOS_N-S_S2S_VPN_TCP_RANGE_130
+131  =====> service_insertion_shared_VYOS_N-S_S2S_VPN_UDP_PORT_131
+132  =====> service_insertion_shared_VYOS_N-S_S2S_VPN_UDP_RANGE_132
+133  =====> service_insertion_shared_VYOS_N-S_S2S_VPN_ICMP_133
+134  =====> service_insertion_shared_VYOS_N-S_S2S_VPN_HTTP_134
+135  =====> service_insertion_shared_VYOS_N-S_S2S_VPN_HTTPS_135
+136  =====> service_insertion_shared_VYOS_N-S_S2S_VPN_SMTP_136
+137  =====> service_insertion_shared_VYOS_N-S_S2S_VPN_DNS_137
+138  =====> service_insertion_shared_VYOS_N-S_S2S_VPN_FTP_138
+
+139  =====> service_insertion_shared_VYOS_N-S_S2S_VPN+LB(V1)_TCP_PORT_139
+140  =====> service_insertion_shared_VYOS_N-S_S2S_VPN+LB(V1)_HTTP_140
+141  =====> service_insertion_shared_VYOS_N-S_S2S_VPN+LB(V1)_HTTPS_141
+142  =====> service_insertion_shared_VYOS_N-S_S2S_VPN+LB(V2)_TCP_PORT_142
+143  =====> service_insertion_shared_VYOS_N-S_S2S_VPN+LB(V2)_HTTP_143
+144  =====> service_insertion_shared_VYOS_N-S_S2S_VPN+LB(V2)_HTTPS_144
+
+145  =====> service_insertion_shared_VYOS_N-S_REMOTE_VPN_TCP_PORT_145
+146  =====> service_insertion_shared_VYOS_N-S_REMOTE_VPN_TCP_RANGE_146
+147  =====> service_insertion_shared_VYOS_N-S_REMOTE_VPN_UDP_PORT_147
+148  =====> service_insertion_shared_VYOS_N-S_REMOTE_VPN_UDP_RANGE_148
+149  =====> service_insertion_shared_VYOS_N-S_REMOTE_VPN_ICMP_149
+150  =====> service_insertion_shared_VYOS_N-S_REMOTE_VPN_HTTP_150
+151  =====> service_insertion_shared_VYOS_N-S_REMOTE_VPN_HTTPS_151
+152  =====> service_insertion_shared_VYOS_N-S_REMOTE_VPN_SMTP_152
+153  =====> service_insertion_shared_VYOS_N-S_REMOTE_VPN_DNS_153
+154  =====> service_insertion_shared_VYOS_N-S_REMOTE_VPN_FTP_154
+
+155  =====> service_insertion_shared_VYOS_N-S_REMOTE_VPN+LB(V1)_TCP_PORT_155
+156  =====> service_insertion_shared_VYOS_N-S_REMOTE_VPN+LB(V1)_HTTP_156
+157  =====> service_insertion_shared_VYOS_N-S_REMOTE_VPN+LB(V1)_HTTPS_157
+158  =====> service_insertion_shared_VYOS_N-S_REMOTE_VPN+LB(V2)_TCP_PORT_158
+159  =====> service_insertion_shared_VYOS_N-S_REMOTE_VPN+LB(V2)_HTTP_159
+160  =====> service_insertion_shared_VYOS_N-S_REMOTE_VPN+LB(V2)_HTTPS_160
+
+161  =====> service_insertion_shared_VYOS_N-S_S2S_VPN+FW_TCP_PORT_161
+162  =====> service_insertion_shared_VYOS_N-S_S2S_VPN+FW_TCP_RANGE_162
+163  =====> service_insertion_shared_VYOS_N-S_S2S_VPN+FW_UDP_PORT_163
+164  =====> service_insertion_shared_VYOS_N-S_S2S_VPN+FW_UDP_RANGE_164
+165  =====> service_insertion_shared_VYOS_N-S_S2S_VPN+FW_ICMP_165
+166  =====> service_insertion_shared_VYOS_N-S_S2S_VPN+FW_HTTP_166
+167  =====> service_insertion_shared_VYOS_N-S_S2S_VPN+FW_HTTPS_167
+168  =====> service_insertion_shared_VYOS_N-S_S2S_VPN+FW_SMTP_168
+169  =====> service_insertion_shared_VYOS_N-S_S2S_VPN+FW_DNS_169
+170  =====> service_insertion_shared_VYOS_N-S_S2S_VPN+FW_FTP_170
+
+171  =====> service_insertion_shared_VYOS_N-S_S2S_VPN+FW+LB(V1)_TCP_PORT_171
+172  =====> service_insertion_shared_VYOS_N-S_S2S_VPN+FW+LB(V1)_HTTP_172
+173  =====> service_insertion_shared_VYOS_N-S_S2S_VPN+FW+LB(V1)_HTTPS_173
+174  =====> service_insertion_shared_VYOS_N-S_S2S_VPN+FW+LB(V2)_TCP_PORT_174
+175  =====> service_insertion_shared_VYOS_N-S_S2S_VPN+FW+LB(V2)_HTTP_175
+176  =====> service_insertion_shared_VYOS_N-S_S2S_VPN+FW+LB(V2)_HTTPS_176
+
+177  =====> service_insertion_shared_VYOS_N-S_REMOTE_VPN+FW_TCP_PORT_177
+178  =====> service_insertion_shared_VYOS_N-S_REMOTE_VPN+FW_TCP_RANGE_178
+179  =====> service_insertion_shared_VYOS_N-S_REMOTE_VPN+FW_UDP_PORT_179
+180  =====> service_insertion_shared_VYOS_N-S_REMOTE_VPN+FW_UDP_RANGE_180
+181  =====> service_insertion_shared_VYOS_N-S_REMOTE_VPN+FW_ICMP_181
+182  =====> service_insertion_shared_VYOS_N-S_REMOTE_VPN+FW_HTTP_182
+183  =====> service_insertion_shared_VYOS_N-S_REMOTE_VPN+FW_HTTPS_183
+184  =====> service_insertion_shared_VYOS_N-S_REMOTE_VPN+FW_SMTP_184
+185  =====> service_insertion_shared_VYOS_N-S_REMOTE_VPN+FW_DNS_185
+186  =====> service_insertion_shared_VYOS_N-S_REMOTE_VPN+FW_FTP_186
+
+187  =====> service_insertion_shared_VYOS_N-S_REMOTE_VPN+FW+LB(V1)_TCP_PORT_187
+188  =====> service_insertion_shared_VYOS_N-S_REMOTE_VPN+FW+LB(V1)_HTTP_188
+189  =====> service_insertion_shared_VYOS_N-S_REMOTE_VPN+FW+LB(V1)_HTTPS_189
+190  =====> service_insertion_shared_VYOS_N-S_REMOTE_VPN+FW+LB(V2)_TCP_PORT_190
+191  =====> service_insertion_shared_VYOS_N-S_REMOTE_VPN+FW+LB(V2)_HTTP_191
+192  =====> service_insertion_shared_VYOS_N-S_REMOTE_VPN+FW+LB(V2)_HTTPS_192
+####################    VYOS scenarios end here  ########################
+
+
+################### ASAV scenarios from 193-384  ########################
+
+# ASAV Image, Project Scope, East-West with only Firewall: [193-202]
+
+193  =====> service_insertion_project_ASAV_E-W_FW_TCP_PORT_193
+194  =====> service_insertion_project_ASAV_E-W_FW_TCP_RANGE_194
+195  =====> service_insertion_project_ASAV_E-W_FW_UDP_PORT_195
+196  =====> service_insertion_project_ASAV_E-W_FW_UDP_RANGE_196
+197  =====> service_insertion_project_ASAV_E-W_FW_ICMP_197
+198  =====> service_insertion_project_ASAV_E-W_FW_HTTP_198
+199  =====> service_insertion_project_ASAV_E-W_FW_HTTPS_199
+200  =====> service_insertion_project_ASAV_E-W_FW_SMTP_200
+201  =====> service_insertion_project_ASAV_E-W_FW_DNS_201
+202  =====> service_insertion_project_ASAV_E-W_FW_FTP_202
+
+# ASAV Image, Project Scope, East-West with Firewall + Loadbalancer: [203-208]
+
+203  =====> service_insertion_project_ASAV_E-W_FW+LB(V1)_TCP_PORT_203
+204  =====> service_insertion_project_ASAV_E-W_FW+LB(V1)_HTTP_204
+205  =====> service_insertion_project_ASAV_E-W_FW+LB(V1)_HTTPS_205
+206  =====> service_insertion_project_ASAV_E-W_FW+LB(V2)_TCP_PORT_206
+207  =====> service_insertion_project_ASAV_E-W_FW+LB(V2)_HTTP_207
+208  =====> service_insertion_project_ASAV_E-W_FW+LB(V2)_HTTPS_208
+
+# ASAV Image, Project Scope, North-South with only Firewall: [209-218]
+
+209  =====> service_insertion_project_ASAV_N-S_FW_TCP_PORT_209
+210  =====> service_insertion_project_ASAV_N-S_FW_TCP_RANGE_210
+211  =====> service_insertion_project_ASAV_N-S_FW_UDP_PORT_211
+212  =====> service_insertion_project_ASAV_N-S_FW_UDP_RANGE_212
+213  =====> service_insertion_project_ASAV_N-S_FW_ICMP_213
+214  =====> service_insertion_project_ASAV_N-S_FW_HTTP_214
+215  =====> service_insertion_project_ASAV_N-S_FW_HTTPS_215
+216  =====> service_insertion_project_ASAV_N-S_FW_SMTP_216
+217  =====> service_insertion_project_ASAV_N-S_FW_DNS_217
+218  =====> service_insertion_project_ASAV_N-S_FW_FTP_218
+
+# ASAV Image, Project Scope, North-South with Firewall + Loadbalancer: [219-224]
+
+219  =====> service_insertion_project_ASAV_N-S_FW+LB(V1)_TCP_PORT_219
+220  =====> service_insertion_project_ASAV_N-S_FW+LB(V1)_HTTP_220
+221  =====> service_insertion_project_ASAV_N-S_FW+LB(V1)_HTTPS_221
+222  =====> service_insertion_project_ASAV_N-S_FW+LB(V2)_TCP_PORT_222
+223  =====> service_insertion_project_ASAV_N-S_FW+LB(V2)_HTTP_223
+224  =====> service_insertion_project_ASAV_N-S_FW+LB(V2)_HTTPS_224
+
+# ASAV Image, Project Scope, North-South with Site to Site VPN: [225-234]
+
+225  =====> service_insertion_project_ASAV_N-S_S2S_VPN_TCP_PORT_225
+226  =====> service_insertion_project_ASAV_N-S_S2S_VPN_TCP_RANGE_226
+227  =====> service_insertion_project_ASAV_N-S_S2S_VPN_UDP_PORT_227
+228  =====> service_insertion_project_ASAV_N-S_S2S_VPN_UDP_RANGE_228
+229  =====> service_insertion_project_ASAV_N-S_S2S_VPN_ICMP_229
+230  =====> service_insertion_project_ASAV_N-S_S2S_VPN_HTTP_230
+231  =====> service_insertion_project_ASAV_N-S_S2S_VPN_HTTPS_231
+232  =====> service_insertion_project_ASAV_N-S_S2S_VPN_SMTP_232
+233  =====> service_insertion_project_ASAV_N-S_S2S_VPN_DNS_233
+234  =====> service_insertion_project_ASAV_N-S_S2S_VPN_FTP_234
+
+# ASAV Image, Project Scope, North-South with Site to Site VPN + Loadbalancer: [235-240]
+235  =====> service_insertion_project_ASAV_N-S_S2S_VPN+LB(V1)_TCP_PORT_235
+236  =====> service_insertion_project_ASAV_N-S_S2S_VPN+LB(V1)_HTTP_236
+237  =====> service_insertion_project_ASAV_N-S_S2S_VPN+LB(V1)_HTTPS_237
+238  =====> service_insertion_project_ASAV_N-S_S2S_VPN+LB(V2)_TCP_PORT_238
+239  =====> service_insertion_project_ASAV_N-S_S2S_VPN+LB(V2)_HTTP_239
+240  =====> service_insertion_project_ASAV_N-S_S2S_VPN+LB(V2)_HTTPS_240
+
+# ASAV Image, Project Scope, North-South with REMOTE VPN: [241-250]
+
+241  =====> service_insertion_project_ASAV_N-S_REMOTE_VPN_TCP_PORT_241
+242  =====> service_insertion_project_ASAV_N-S_REMOTE_VPN_TCP_RANGE_242
+243  =====> service_insertion_project_ASAV_N-S_REMOTE_VPN_UDP_PORT_243
+244  =====> service_insertion_project_ASAV_N-S_REMOTE_VPN_UDP_RANGE_244
+245  =====> service_insertion_project_ASAV_N-S_REMOTE_VPN_ICMP_245
+246  =====> service_insertion_project_ASAV_N-S_REMOTE_VPN_HTTP_246
+247  =====> service_insertion_project_ASAV_N-S_REMOTE_VPN_HTTPS_247
+248  =====> service_insertion_project_ASAV_N-S_REMOTE_VPN_SMTP_248
+249  =====> service_insertion_project_ASAV_N-S_REMOTE_VPN_DNS_249
+250  =====> service_insertion_project_ASAV_N-S_REMOTE_VPN_FTP_250
+
+# ASAV Image, Project Scope, North-South with REMOTE VPN + Loadbalancer: [250-256]
+
+251  =====> service_insertion_project_ASAV_N-S_REMOTE_VPN+LB(V1)_TCP_PORT_251
+252  =====> service_insertion_project_ASAV_N-S_REMOTE_VPN+LB(V1)_HTTP_252
+253  =====> service_insertion_project_ASAV_N-S_REMOTE_VPN+LB(V1)_HTTPS_253
+254  =====> service_insertion_project_ASAV_N-S_REMOTE_VPN+LB(V2)_TCP_PORT_254
+255  =====> service_insertion_project_ASAV_N-S_REMOTE_VPN+LB(V2)_HTTP_255
+256  =====> service_insertion_project_ASAV_N-S_REMOTE_VPN+LB(V2)_HTTPS_256
+
+# ASAV Image, Project Scope, North-South with Site to Site VPN + Firewall: [257-266]
+
+257  =====> service_insertion_project_ASAV_N-S_S2S_VPN+FW_TCP_PORT_257
+258  =====> service_insertion_project_ASAV_N-S_S2S_VPN+FW_TCP_RANGE_258
+259  =====> service_insertion_project_ASAV_N-S_S2S_VPN+FW_UDP_PORT_259
+260  =====> service_insertion_project_ASAV_N-S_S2S_VPN+FW_UDP_RANGE_260
+261  =====> service_insertion_project_ASAV_N-S_S2S_VPN+FW_ICMP_261
+262  =====> service_insertion_project_ASAV_N-S_S2S_VPN+FW_HTTP_262
+263  =====> service_insertion_project_ASAV_N-S_S2S_VPN+FW_HTTPS_263
+264  =====> service_insertion_project_ASAV_N-S_S2S_VPN+FW_SMTP_264
+265  =====> service_insertion_project_ASAV_N-S_S2S_VPN+FW_DNS_265
+266  =====> service_insertion_project_ASAV_N-S_S2S_VPN+FW_FTP_266
+
+# ASAV Image, Project Scope, North-South with Site to Site VPN + Firewall + Loadbalancer: [267-272]
+
+267  =====> service_insertion_project_ASAV_N-S_S2S_VPN+FW+LB(V1)_TCP_PORT_267
+268  =====> service_insertion_project_ASAV_N-S_S2S_VPN+FW+LB(V1)_HTTP_268
+269  =====> service_insertion_project_ASAV_N-S_S2S_VPN+FW+LB(V1)_HTTPS_269
+270  =====> service_insertion_project_ASAV_N-S_S2S_VPN+FW+LB(V2)_TCP_PORT_270
+271  =====> service_insertion_project_ASAV_N-S_S2S_VPN+FW+LB(V2)_HTTP_271
+272  =====> service_insertion_project_ASAV_N-S_S2S_VPN+FW+LB(V2)_HTTPS_272
+
+# ASAV Image, Project Scope, North-South with REMOTE VPN + Firewall: [273-282]
+
+273  =====> service_insertion_project_ASAV_N-S_REMOTE_VPN+FW_TCP_PORT_273
+274  =====> service_insertion_project_ASAV_N-S_REMOTE_VPN+FW_TCP_RANGE_274
+275  =====> service_insertion_project_ASAV_N-S_REMOTE_VPN+FW_UDP_PORT_275
+276  =====> service_insertion_project_ASAV_N-S_REMOTE_VPN+FW_UDP_RANGE_276
+277  =====> service_insertion_project_ASAV_N-S_REMOTE_VPN+FW_ICMP_277
+278  =====> service_insertion_project_ASAV_N-S_REMOTE_VPN+FW_HTTP_278
+279  =====> service_insertion_project_ASAV_N-S_REMOTE_VPN+FW_HTTPS_279
+280  =====> service_insertion_project_ASAV_N-S_REMOTE_VPN+FW_SMTP_280
+281  =====> service_insertion_project_ASAV_N-S_REMOTE_VPN+FW_DNS_281
+282  =====> service_insertion_project_ASAV_N-S_REMOTE_VPN+FW_FTP_282
+
+# ASAV Image, Project Scope, North-South with REMOTE VPN + Firewall + Loadbalancer: [283-288]
+
+283  =====> service_insertion_project_ASAV_N-S_REMOTE_VPN+FW+LB(V1)_TCP_PORT_283
+284  =====> service_insertion_project_ASAV_N-S_REMOTE_VPN+FW+LB(V1)_HTTP_284
+285  =====> service_insertion_project_ASAV_N-S_REMOTE_VPN+FW+LB(V1)_HTTPS_285
+286  =====> service_insertion_project_ASAV_N-S_REMOTE_VPN+FW+LB(V2)_TCP_PORT_286
+287  =====> service_insertion_project_ASAV_N-S_REMOTE_VPN+FW+LB(V2)_HTTP_287
+288  =====> service_insertion_project_ASAV_N-S_REMOTE_VPN+FW+LB(V2)_HTTPS_288
+
+######## ASAV sharable scenarios from 289-384    ################## 
+289  =====> service_insertion_shared_ASAV_E-W_FW_TCP_PORT_289
+290  =====> service_insertion_shared_ASAV_E-W_FW_TCP_RANGE_290
+291  =====> service_insertion_shared_ASAV_E-W_FW_UDP_PORT_291
+292  =====> service_insertion_shared_ASAV_E-W_FW_UDP_RANGE_292
+293  =====> service_insertion_shared_ASAV_E-W_FW_ICMP_293
+294  =====> service_insertion_shared_ASAV_E-W_FW_HTTP_294
+295  =====> service_insertion_shared_ASAV_E-W_FW_HTTPS_295
+296  =====> service_insertion_shared_ASAV_E-W_FW_SMTP_296
+297  =====> service_insertion_shared_ASAV_E-W_FW_DNS_297
+298  =====> service_insertion_shared_ASAV_E-W_FW_FTP_298
+
+299  =====> service_insertion_shared_ASAV_E-W_FW+LB(V1)_TCP_PORT_299
+300  =====> service_insertion_shared_ASAV_E-W_FW+LB(V1)_HTTP_300
+301  =====> service_insertion_shared_ASAV_E-W_FW+LB(V1)_HTTPS_301
+302  =====> service_insertion_shared_ASAV_E-W_FW+LB(V2)_TCP_PORT_302
+303  =====> service_insertion_shared_ASAV_E-W_FW+LB(V2)_HTTP_303
+304  =====> service_insertion_shared_ASAV_E-W_FW+LB(V2)_HTTPS_304
+
+305  =====> service_insertion_shared_ASAV_N-S_FW_TCP_PORT_305
+306  =====> service_insertion_shared_ASAV_N-S_FW_TCP_RANGE_306
+307  =====> service_insertion_shared_ASAV_N-S_FW_UDP_PORT_307
+308  =====> service_insertion_shared_ASAV_N-S_FW_UDP_RANGE_308
+309  =====> service_insertion_shared_ASAV_N-S_FW_ICMP_309
+310  =====> service_insertion_shared_ASAV_N-S_FW_HTTP_310
+311  =====> service_insertion_shared_ASAV_N-S_FW_HTTPS_311
+312  =====> service_insertion_shared_ASAV_N-S_FW_SMTP_312
+313  =====> service_insertion_shared_ASAV_N-S_FW_DNS_313
+314  =====> service_insertion_shared_ASAV_N-S_FW_FTP_314
+
+315  =====> service_insertion_shared_ASAV_N-S_FW+LB(V1)_TCP_PORT_315
+316  =====> service_insertion_shared_ASAV_N-S_FW+LB(V1)_HTTP_316
+317  =====> service_insertion_shared_ASAV_N-S_FW+LB(V1)_HTTPS_317
+318  =====> service_insertion_shared_ASAV_N-S_FW+LB(V2)_TCP_PORT_318
+319  =====> service_insertion_shared_ASAV_N-S_FW+LB(V2)_HTTP_319
+320  =====> service_insertion_shared_ASAV_N-S_FW+LB(V2)_HTTPS_320
+
+321  =====> service_insertion_shared_ASAV_N-S_S2S_VPN_TCP_PORT_321
+322  =====> service_insertion_shared_ASAV_N-S_S2S_VPN_TCP_RANGE_322
+323  =====> service_insertion_shared_ASAV_N-S_S2S_VPN_UDP_PORT_323
+324  =====> service_insertion_shared_ASAV_N-S_S2S_VPN_UDP_RANGE_324
+325  =====> service_insertion_shared_ASAV_N-S_S2S_VPN_ICMP_325
+326  =====> service_insertion_shared_ASAV_N-S_S2S_VPN_HTTP_326
+327  =====> service_insertion_shared_ASAV_N-S_S2S_VPN_HTTPS_327
+328  =====> service_insertion_shared_ASAV_N-S_S2S_VPN_SMTP_328
+329  =====> service_insertion_shared_ASAV_N-S_S2S_VPN_DNS_329
+330  =====> service_insertion_shared_ASAV_N-S_S2S_VPN_FTP_330
+
+331  =====> service_insertion_shared_ASAV_N-S_S2S_VPN+LB(V1)_TCP_PORT_331
+332  =====> service_insertion_shared_ASAV_N-S_S2S_VPN+LB(V1)_HTTP_332
+333  =====> service_insertion_shared_ASAV_N-S_S2S_VPN+LB(V1)_HTTPS_333
+334  =====> service_insertion_shared_ASAV_N-S_S2S_VPN+LB(V2)_TCP_PORT_334
+335  =====> service_insertion_shared_ASAV_N-S_S2S_VPN+LB(V2)_HTTP_335
+336  =====> service_insertion_shared_ASAV_N-S_S2S_VPN+LB(V2)_HTTPS_336
+
+337  =====> service_insertion_shared_ASAV_N-S_REMOTE_VPN_TCP_PORT_337
+338  =====> service_insertion_shared_ASAV_N-S_REMOTE_VPN_TCP_RANGE_338
+339  =====> service_insertion_shared_ASAV_N-S_REMOTE_VPN_UDP_PORT_339
+340  =====> service_insertion_shared_ASAV_N-S_REMOTE_VPN_UDP_RANGE_340
+341  =====> service_insertion_shared_ASAV_N-S_REMOTE_VPN_ICMP_341
+342  =====> service_insertion_shared_ASAV_N-S_REMOTE_VPN_HTTP_342
+343  =====> service_insertion_shared_ASAV_N-S_REMOTE_VPN_HTTPS_343
+344  =====> service_insertion_shared_ASAV_N-S_REMOTE_VPN_SMTP_344
+345  =====> service_insertion_shared_ASAV_N-S_REMOTE_VPN_DNS_345
+346  =====> service_insertion_shared_ASAV_N-S_REMOTE_VPN_FTP_346
+
+347  =====> service_insertion_shared_ASAV_N-S_REMOTE_VPN+LB(V1)_TCP_PORT_347
+348  =====> service_insertion_shared_ASAV_N-S_REMOTE_VPN+LB(V1)_HTTP_348
+349  =====> service_insertion_shared_ASAV_N-S_REMOTE_VPN+LB(V1)_HTTPS_349
+350  =====> service_insertion_shared_ASAV_N-S_REMOTE_VPN+LB(V2)_TCP_PORT_350
+351  =====> service_insertion_shared_ASAV_N-S_REMOTE_VPN+LB(V2)_HTTP_351
+352  =====> service_insertion_shared_ASAV_N-S_REMOTE_VPN+LB(V2)_HTTPS_352
+
+353  =====> service_insertion_shared_ASAV_N-S_S2S_VPN+FW_TCP_PORT_353
+354  =====> service_insertion_shared_ASAV_N-S_S2S_VPN+FW_TCP_RANGE_354
+355  =====> service_insertion_shared_ASAV_N-S_S2S_VPN+FW_UDP_PORT_355
+356  =====> service_insertion_shared_ASAV_N-S_S2S_VPN+FW_UDP_RANGE_356
+357  =====> service_insertion_shared_ASAV_N-S_S2S_VPN+FW_ICMP_357
+358  =====> service_insertion_shared_ASAV_N-S_S2S_VPN+FW_HTTP_358
+359  =====> service_insertion_shared_ASAV_N-S_S2S_VPN+FW_HTTPS_359
+360  =====> service_insertion_shared_ASAV_N-S_S2S_VPN+FW_SMTP_360
+361  =====> service_insertion_shared_ASAV_N-S_S2S_VPN+FW_DNS_361
+362  =====> service_insertion_shared_ASAV_N-S_S2S_VPN+FW_FTP_362
+
+363  =====> service_insertion_shared_ASAV_N-S_S2S_VPN+FW+LB(V1)_TCP_PORT_363
+364  =====> service_insertion_shared_ASAV_N-S_S2S_VPN+FW+LB(V1)_HTTP_364
+365  =====> service_insertion_shared_ASAV_N-S_S2S_VPN+FW+LB(V1)_HTTPS_365
+366  =====> service_insertion_shared_ASAV_N-S_S2S_VPN+FW+LB(V2)_TCP_PORT_366
+367  =====> service_insertion_shared_ASAV_N-S_S2S_VPN+FW+LB(V2)_HTTP_367
+368  =====> service_insertion_shared_ASAV_N-S_S2S_VPN+FW+LB(V2)_HTTPS_368
+
+369  =====> service_insertion_shared_ASAV_N-S_REMOTE_VPN+FW_TCP_PORT_369
+370  =====> service_insertion_shared_ASAV_N-S_REMOTE_VPN+FW_TCP_RANGE_370
+371  =====> service_insertion_shared_ASAV_N-S_REMOTE_VPN+FW_UDP_PORT_371
+372  =====> service_insertion_shared_ASAV_N-S_REMOTE_VPN+FW_UDP_RANGE_372
+373  =====> service_insertion_shared_ASAV_N-S_REMOTE_VPN+FW_ICMP_373
+374  =====> service_insertion_shared_ASAV_N-S_REMOTE_VPN+FW_HTTP_374
+375  =====> service_insertion_shared_ASAV_N-S_REMOTE_VPN+FW_HTTPS_375
+376  =====> service_insertion_shared_ASAV_N-S_REMOTE_VPN+FW_SMTP_376
+377  =====> service_insertion_shared_ASAV_N-S_REMOTE_VPN+FW_DNS_377
+378  =====> service_insertion_shared_ASAV_N-S_REMOTE_VPN+FW_FTP_378
+
+379  =====> service_insertion_shared_ASAV_N-S_REMOTE_VPN+FW+LB(V1)_TCP_PORT_379
+380  =====> service_insertion_shared_ASAV_N-S_REMOTE_VPN+FW+LB(V1)_HTTP_380
+381  =====> service_insertion_shared_ASAV_N-S_REMOTE_VPN+FW+LB(V1)_HTTPS_381
+382  =====> service_insertion_shared_ASAV_N-S_REMOTE_VPN+FW+LB(V2)_TCP_PORT_382
+383  =====> service_insertion_shared_ASAV_N-S_REMOTE_VPN+FW+LB(V2)_HTTP_383
+384  =====> service_insertion_shared_ASAV_N-S_REMOTE_VPN+FW+LB(V2)_HTTPS_384
+
+############### END of ASAV scenarios ############################################
+
+################### PaloAlto scenarios from 384-576  ########################
+
+#  PaloAlto Image, Project Scope, East-West with only Firewall: [385-394]
+
+385  =====> service_insertion_project_PaloAlto_E-W_FW_TCP_PORT_385
+386  =====> service_insertion_project_PaloAlto_E-W_FW_TCP_RANGE_386
+387  =====> service_insertion_project_PaloAlto_E-W_FW_UDP_PORT_387
+388  =====> service_insertion_project_PaloAlto_E-W_FW_UDP_RANGE_388
+389  =====> service_insertion_project_PaloAlto_E-W_FW_ICMP_389
+390  =====> service_insertion_project_PaloAlto_E-W_FW_HTTP_390
+391  =====> service_insertion_project_PaloAlto_E-W_FW_HTTPS_391
+392  =====> service_insertion_project_PaloAlto_E-W_FW_SMTP_392
+393  =====> service_insertion_project_PaloAlto_E-W_FW_DNS_393
+394  =====> service_insertion_project_PaloAlto_E-W_FW_FTP_394
+
+#  PaloAlto Image, Project Scope, East-West with only Firewall + LoadBalancer: [395-400]
+
+395  =====> service_insertion_project_PaloAlto_E-W_FW+LB(V1)_TCP_PORT_395
+396  =====> service_insertion_project_PaloAlto_E-W_FW+LB(V1)_HTTP_396
+397  =====> service_insertion_project_PaloAlto_E-W_FW+LB(V1)_HTTPS_397
+398  =====> service_insertion_project_PaloAlto_E-W_FW+LB(V2)_TCP_PORT_398
+399  =====> service_insertion_project_PaloAlto_E-W_FW+LB(V2)_HTTP_399
+400  =====> service_insertion_project_PaloAlto_E-W_FW+LB(V2)_HTTPS_400
+
+#  PaloAlto Image, Project Scope, North-South with only Firewall: [401-410]
+
+401  =====> service_insertion_project_PaloAlto_N-S_FW_TCP_PORT_401
+402  =====> service_insertion_project_PaloAlto_N-S_FW_TCP_RANGE_402
+403  =====> service_insertion_project_PaloAlto_N-S_FW_UDP_PORT_403
+404  =====> service_insertion_project_PaloAlto_N-S_FW_UDP_RANGE_404
+405  =====> service_insertion_project_PaloAlto_N-S_FW_ICMP_405
+406  =====> service_insertion_project_PaloAlto_N-S_FW_HTTP_406
+407  =====> service_insertion_project_PaloAlto_N-S_FW_HTTPS_407
+408  =====> service_insertion_project_PaloAlto_N-S_FW_SMTP_408
+409  =====> service_insertion_project_PaloAlto_N-S_FW_DNS_409
+410  =====> service_insertion_project_PaloAlto_N-S_FW_FTP_410
+
+#  PaloAlto Image, Project Scope, North-South with only Firewall + LoadBalancer: [411-416]
+
+411  =====> service_insertion_project_PaloAlto_N-S_FW+LB(V1)_TCP_PORT_411
+412  =====> service_insertion_project_PaloAlto_N-S_FW+LB(V1)_HTTP_412
+413  =====> service_insertion_project_PaloAlto_N-S_FW+LB(V1)_HTTPS_413
+414  =====> service_insertion_project_PaloAlto_N-S_FW+LB(V2)_TCP_PORT_414
+415  =====> service_insertion_project_PaloAlto_N-S_FW+LB(V2)_HTTP_415
+416  =====> service_insertion_project_PaloAlto_N-S_FW+LB(V2)_HTTPS_416
+
+# PaloAlto Image, Project Scope, North-South with Site to Site VPN: [417-426]
+
+417  =====> service_insertion_project_PaloAlto_N-S_S2S_VPN_TCP_PORT_417
+418  =====> service_insertion_project_PaloAlto_N-S_S2S_VPN_TCP_RANGE_418
+419  =====> service_insertion_project_PaloAlto_N-S_S2S_VPN_UDP_PORT_419
+420  =====> service_insertion_project_PaloAlto_N-S_S2S_VPN_UDP_RANGE_420
+421  =====> service_insertion_project_PaloAlto_N-S_S2S_VPN_ICMP_421
+422  =====> service_insertion_project_PaloAlto_N-S_S2S_VPN_HTTP_422
+423  =====> service_insertion_project_PaloAlto_N-S_S2S_VPN_HTTPS_423
+424  =====> service_insertion_project_PaloAlto_N-S_S2S_VPN_SMTP_424
+425  =====> service_insertion_project_PaloAlto_N-S_S2S_VPN_DNS_425
+426  =====> service_insertion_project_PaloAlto_N-S_S2S_VPN_FTP_426
+
+# PaloAlto Image, Project Scope, North-South with Site to Site VPN + Loadbalancer: [427-432]
+
+427  =====> service_insertion_project_PaloAlto_N-S_S2S_VPN+LB(V1)_TCP_PORT_427
+428  =====> service_insertion_project_PaloAlto_N-S_S2S_VPN+LB(V1)_HTTP_428
+429  =====> service_insertion_project_PaloAlto_N-S_S2S_VPN+LB(V1)_HTTPS_429
+430  =====> service_insertion_project_PaloAlto_N-S_S2S_VPN+LB(V2)_TCP_PORT_430
+431  =====> service_insertion_project_PaloAlto_N-S_S2S_VPN+LB(V2)_HTTP_431
+432  =====> service_insertion_project_PaloAlto_N-S_S2S_VPN+LB(V2)_HTTPS_432
+
+# PaloAlto Image, Project Scope, North-South with Remote VPN: [433-442]
+
+433  =====> service_insertion_project_PaloAlto_N-S_REMOTE_VPN_TCP_PORT_433
+434  =====> service_insertion_project_PaloAlto_N-S_REMOTE_VPN_TCP_RANGE_434
+435  =====> service_insertion_project_PaloAlto_N-S_REMOTE_VPN_UDP_PORT_435
+436  =====> service_insertion_project_PaloAlto_N-S_REMOTE_VPN_UDP_RANGE_436
+437  =====> service_insertion_project_PaloAlto_N-S_REMOTE_VPN_ICMP_437
+438  =====> service_insertion_project_PaloAlto_N-S_REMOTE_VPN_HTTP_438
+439  =====> service_insertion_project_PaloAlto_N-S_REMOTE_VPN_HTTPS_439
+440  =====> service_insertion_project_PaloAlto_N-S_REMOTE_VPN_SMTP_440
+441  =====> service_insertion_project_PaloAlto_N-S_REMOTE_VPN_DNS_441
+442  =====> service_insertion_project_PaloAlto_N-S_REMOTE_VPN_FTP_442
+
+# PaloAlto Image, Project Scope, North-South with Remote VPN + Loadbalancer: [443-448]
+
+443  =====> service_insertion_project_PaloAlto_N-S_REMOTE_VPN+LB(V1)_TCP_PORT_443
+444  =====> service_insertion_project_PaloAlto_N-S_REMOTE_VPN+LB(V1)_HTTP_444
+445  =====> service_insertion_project_PaloAlto_N-S_REMOTE_VPN+LB(V1)_HTTPS_445
+446  =====> service_insertion_project_PaloAlto_N-S_REMOTE_VPN+LB(V2)_TCP_PORT_446
+447  =====> service_insertion_project_PaloAlto_N-S_REMOTE_VPN+LB(V2)_HTTP_447
+448  =====> service_insertion_project_PaloAlto_N-S_REMOTE_VPN+LB(V2)_HTTPS_448
+
+# PaloAlto Image, Project Scope, North-South with Site to Site VPN + Firewall: [449-458]
+
+449  =====> service_insertion_project_PaloAlto_N-S_S2S_VPN+FW_TCP_PORT_449
+450  =====> service_insertion_project_PaloAlto_N-S_S2S_VPN+FW_TCP_RANGE_450
+451  =====> service_insertion_project_PaloAlto_N-S_S2S_VPN+FW_UDP_PORT_451
+452  =====> service_insertion_project_PaloAlto_N-S_S2S_VPN+FW_UDP_RANGE_452
+453  =====> service_insertion_project_PaloAlto_N-S_S2S_VPN+FW_ICMP_453
+454  =====> service_insertion_project_PaloAlto_N-S_S2S_VPN+FW_HTTP_454
+455  =====> service_insertion_project_PaloAlto_N-S_S2S_VPN+FW_HTTPS_455
+456  =====> service_insertion_project_PaloAlto_N-S_S2S_VPN+FW_SMTP_456
+457  =====> service_insertion_project_PaloAlto_N-S_S2S_VPN+FW_DNS_457
+458  =====> service_insertion_project_PaloAlto_N-S_S2S_VPN+FW_FTP_458
+
+# PaloAlto Image, Project Scope, North-South with Site to Site VPN + Firewall + Loadbalancer: [459-464]
+
+459  =====> service_insertion_project_PaloAlto_N-S_S2S_VPN+FW+LB(V1)_TCP_PORT_459
+460  =====> service_insertion_project_PaloAlto_N-S_S2S_VPN+FW+LB(V1)_HTTP_460
+461  =====> service_insertion_project_PaloAlto_N-S_S2S_VPN+FW+LB(V1)_HTTPS_461
+462  =====> service_insertion_project_PaloAlto_N-S_S2S_VPN+FW+LB(V2)_TCP_PORT_462
+463  =====> service_insertion_project_PaloAlto_N-S_S2S_VPN+FW+LB(V2)_HTTP_463
+464  =====> service_insertion_project_PaloAlto_N-S_S2S_VPN+FW+LB(V2)_HTTPS_464
+
+# PaloAlto Image, Project Scope, North-South with Remote VPN + Firewall: [465-474]
+
+465  =====> service_insertion_project_PaloAlto_N-S_REMOTE_VPN+FW_TCP_PORT_465
+466  =====> service_insertion_project_PaloAlto_N-S_REMOTE_VPN+FW_TCP_RANGE_466
+467  =====> service_insertion_project_PaloAlto_N-S_REMOTE_VPN+FW_UDP_PORT_467
+468  =====> service_insertion_project_PaloAlto_N-S_REMOTE_VPN+FW_UDP_RANGE_468
+469  =====> service_insertion_project_PaloAlto_N-S_REMOTE_VPN+FW_ICMP_469
+470  =====> service_insertion_project_PaloAlto_N-S_REMOTE_VPN+FW_HTTP_470
+471  =====> service_insertion_project_PaloAlto_N-S_REMOTE_VPN+FW_HTTPS_471
+472  =====> service_insertion_project_PaloAlto_N-S_REMOTE_VPN+FW_SMTP_472
+473  =====> service_insertion_project_PaloAlto_N-S_REMOTE_VPN+FW_DNS_473
+474  =====> service_insertion_project_PaloAlto_N-S_REMOTE_VPN+FW_FTP_474
+
+# PaloAlto Image, Project Scope, North-South with Remote VPN + Firewall + Loadbalancer: [475-480]
+
+475  =====> service_insertion_project_PaloAlto_N-S_REMOTE_VPN+FW+LB(V1)_TCP_PORT_475
+476  =====> service_insertion_project_PaloAlto_N-S_REMOTE_VPN+FW+LB(V1)_HTTP_476
+477  =====> service_insertion_project_PaloAlto_N-S_REMOTE_VPN+FW+LB(V1)_HTTPS_477
+478  =====> service_insertion_project_PaloAlto_N-S_REMOTE_VPN+FW+LB(V2)_TCP_PORT_478
+479  =====> service_insertion_project_PaloAlto_N-S_REMOTE_VPN+FW+LB(V2)_HTTP_479
+480  =====> service_insertion_project_PaloAlto_N-S_REMOTE_VPN+FW+LB(V2)_HTTPS_480
+
+
+######## PaloAlto sharable scenarios from 481-576    ################## 
+
+481  =====> service_insertion_shared_PaloAlto_E-W_FW_TCP_PORT_481
+482  =====> service_insertion_shared_PaloAlto_E-W_FW_TCP_RANGE_482
+483  =====> service_insertion_shared_PaloAlto_E-W_FW_UDP_PORT_483
+484  =====> service_insertion_shared_PaloAlto_E-W_FW_UDP_RANGE_484
+485  =====> service_insertion_shared_PaloAlto_E-W_FW_ICMP_485
+486  =====> service_insertion_shared_PaloAlto_E-W_FW_HTTP_486
+487  =====> service_insertion_shared_PaloAlto_E-W_FW_HTTPS_487
+488  =====> service_insertion_shared_PaloAlto_E-W_FW_SMTP_488
+489  =====> service_insertion_shared_PaloAlto_E-W_FW_DNS_489
+490  =====> service_insertion_shared_PaloAlto_E-W_FW_FTP_490
+
+491  =====> service_insertion_shared_PaloAlto_E-W_FW+LB(V1)_TCP_PORT_491
+492  =====> service_insertion_shared_PaloAlto_E-W_FW+LB(V1)_HTTP_492
+493  =====> service_insertion_shared_PaloAlto_E-W_FW+LB(V1)_HTTPS_493
+494  =====> service_insertion_shared_PaloAlto_E-W_FW+LB(V2)_TCP_PORT_494
+495  =====> service_insertion_shared_PaloAlto_E-W_FW+LB(V2)_HTTP_495
+496  =====> service_insertion_shared_PaloAlto_E-W_FW+LB(V2)_HTTPS_496
+
+497  =====> service_insertion_shared_PaloAlto_N-S_FW_TCP_PORT_497
+498  =====> service_insertion_shared_PaloAlto_N-S_FW_TCP_RANGE_498
+499  =====> service_insertion_shared_PaloAlto_N-S_FW_UDP_PORT_499
+500  =====> service_insertion_shared_PaloAlto_N-S_FW_UDP_RANGE_500
+501  =====> service_insertion_shared_PaloAlto_N-S_FW_ICMP_501
+502  =====> service_insertion_shared_PaloAlto_N-S_FW_HTTP_502
+503  =====> service_insertion_shared_PaloAlto_N-S_FW_HTTPS_503
+504  =====> service_insertion_shared_PaloAlto_N-S_FW_SMTP_504
+505  =====> service_insertion_shared_PaloAlto_N-S_FW_DNS_505
+506  =====> service_insertion_shared_PaloAlto_N-S_FW_FTP_506
+
+507  =====> service_insertion_shared_PaloAlto_N-S_FW+LB(V1)_TCP_PORT_507
+508  =====> service_insertion_shared_PaloAlto_N-S_FW+LB(V1)_HTTP_508
+509  =====> service_insertion_shared_PaloAlto_N-S_FW+LB(V1)_HTTPS_509
+510  =====> service_insertion_shared_PaloAlto_N-S_FW+LB(V2)_TCP_PORT_510
+511  =====> service_insertion_shared_PaloAlto_N-S_FW+LB(V2)_HTTP_511
+512  =====> service_insertion_shared_PaloAlto_N-S_FW+LB(V2)_HTTPS_512
+
+513  =====> service_insertion_shared_PaloAlto_N-S_S2S_VPN_TCP_PORT_513
+514  =====> service_insertion_shared_PaloAlto_N-S_S2S_VPN_TCP_RANGE_514
+515  =====> service_insertion_shared_PaloAlto_N-S_S2S_VPN_UDP_PORT_515
+516  =====> service_insertion_shared_PaloAlto_N-S_S2S_VPN_UDP_RANGE_516
+517  =====> service_insertion_shared_PaloAlto_N-S_S2S_VPN_ICMP_517
+518  =====> service_insertion_shared_PaloAlto_N-S_S2S_VPN_HTTP_518
+519  =====> service_insertion_shared_PaloAlto_N-S_S2S_VPN_HTTPS_519
+520  =====> service_insertion_shared_PaloAlto_N-S_S2S_VPN_SMTP_520
+521  =====> service_insertion_shared_PaloAlto_N-S_S2S_VPN_DNS_521
+522  =====> service_insertion_shared_PaloAlto_N-S_S2S_VPN_FTP_522
+
+523  =====> service_insertion_shared_PaloAlto_N-S_S2S_VPN+LB(V1)_TCP_PORT_523
+524  =====> service_insertion_shared_PaloAlto_N-S_S2S_VPN+LB(V1)_HTTP_524
+525  =====> service_insertion_shared_PaloAlto_N-S_S2S_VPN+LB(V1)_HTTPS_525
+526  =====> service_insertion_shared_PaloAlto_N-S_S2S_VPN+LB(V2)_TCP_PORT_526
+527  =====> service_insertion_shared_PaloAlto_N-S_S2S_VPN+LB(V2)_HTTP_527
+528  =====> service_insertion_shared_PaloAlto_N-S_S2S_VPN+LB(V2)_HTTPS_528
+
+529  =====> service_insertion_shared_PaloAlto_N-S_REMOTE_VPN_TCP_PORT_529
+530  =====> service_insertion_shared_PaloAlto_N-S_REMOTE_VPN_TCP_RANGE_530
+531  =====> service_insertion_shared_PaloAlto_N-S_REMOTE_VPN_UDP_PORT_531
+532  =====> service_insertion_shared_PaloAlto_N-S_REMOTE_VPN_UDP_RANGE_532
+533  =====> service_insertion_shared_PaloAlto_N-S_REMOTE_VPN_ICMP_533
+534  =====> service_insertion_shared_PaloAlto_N-S_REMOTE_VPN_HTTP_534
+535  =====> service_insertion_shared_PaloAlto_N-S_REMOTE_VPN_HTTPS_535
+536  =====> service_insertion_shared_PaloAlto_N-S_REMOTE_VPN_SMTP_536
+537  =====> service_insertion_shared_PaloAlto_N-S_REMOTE_VPN_DNS_537
+538  =====> service_insertion_shared_PaloAlto_N-S_REMOTE_VPN_FTP_538
+
+539  =====> service_insertion_shared_PaloAlto_N-S_REMOTE_VPN+LB(V1)_TCP_PORT_539
+540  =====> service_insertion_shared_PaloAlto_N-S_REMOTE_VPN+LB(V1)_HTTP_540
+541  =====> service_insertion_shared_PaloAlto_N-S_REMOTE_VPN+LB(V1)_HTTPS_541
+542  =====> service_insertion_shared_PaloAlto_N-S_REMOTE_VPN+LB(V2)_TCP_PORT_542
+543  =====> service_insertion_shared_PaloAlto_N-S_REMOTE_VPN+LB(V2)_HTTP_543
+544  =====> service_insertion_shared_PaloAlto_N-S_REMOTE_VPN+LB(V2)_HTTPS_544
+
+545  =====> service_insertion_shared_PaloAlto_N-S_S2S_VPN+FW_TCP_PORT_545
+546  =====> service_insertion_shared_PaloAlto_N-S_S2S_VPN+FW_TCP_RANGE_546
+547  =====> service_insertion_shared_PaloAlto_N-S_S2S_VPN+FW_UDP_PORT_547
+548  =====> service_insertion_shared_PaloAlto_N-S_S2S_VPN+FW_UDP_RANGE_548
+549  =====> service_insertion_shared_PaloAlto_N-S_S2S_VPN+FW_ICMP_549
+550  =====> service_insertion_shared_PaloAlto_N-S_S2S_VPN+FW_HTTP_550
+551  =====> service_insertion_shared_PaloAlto_N-S_S2S_VPN+FW_HTTPS_551
+552  =====> service_insertion_shared_PaloAlto_N-S_S2S_VPN+FW_SMTP_552
+553  =====> service_insertion_shared_PaloAlto_N-S_S2S_VPN+FW_DNS_553
+554  =====> service_insertion_shared_PaloAlto_N-S_S2S_VPN+FW_FTP_554
+
+555  =====> service_insertion_shared_PaloAlto_N-S_S2S_VPN+FW+LB(V1)_TCP_PORT_555
+556  =====> service_insertion_shared_PaloAlto_N-S_S2S_VPN+FW+LB(V1)_HTTP_556
+557  =====> service_insertion_shared_PaloAlto_N-S_S2S_VPN+FW+LB(V1)_HTTPS_557
+558  =====> service_insertion_shared_PaloAlto_N-S_S2S_VPN+FW+LB(V2)_TCP_PORT_558
+559  =====> service_insertion_shared_PaloAlto_N-S_S2S_VPN+FW+LB(V2)_HTTP_559
+560  =====> service_insertion_shared_PaloAlto_N-S_S2S_VPN+FW+LB(V2)_HTTPS_560
+
+561  =====> service_insertion_shared_PaloAlto_N-S_REMOTE_VPN+FW_TCP_PORT_561
+562  =====> service_insertion_shared_PaloAlto_N-S_REMOTE_VPN+FW_TCP_RANGE_562
+563  =====> service_insertion_shared_PaloAlto_N-S_REMOTE_VPN+FW_UDP_PORT_563
+564  =====> service_insertion_shared_PaloAlto_N-S_REMOTE_VPN+FW_UDP_RANGE_564
+565  =====> service_insertion_shared_PaloAlto_N-S_REMOTE_VPN+FW_ICMP_565
+566  =====> service_insertion_shared_PaloAlto_N-S_REMOTE_VPN+FW_HTTP_566
+567  =====> service_insertion_shared_PaloAlto_N-S_REMOTE_VPN+FW_HTTPS_567
+568  =====> service_insertion_shared_PaloAlto_N-S_REMOTE_VPN+FW_SMTP_568
+569  =====> service_insertion_shared_PaloAlto_N-S_REMOTE_VPN+FW_DNS_569
+570  =====> service_insertion_shared_PaloAlto_N-S_REMOTE_VPN+FW_FTP_570
+
+571  =====> service_insertion_shared_PaloAlto_N-S_REMOTE_VPN+FW+LB(V1)_TCP_PORT_571
+572  =====> service_insertion_shared_PaloAlto_N-S_REMOTE_VPN+FW+LB(V1)_HTTP_572
+573  =====> service_insertion_shared_PaloAlto_N-S_REMOTE_VPN+FW+LB(V1)_HTTPS_573
+574  =====> service_insertion_shared_PaloAlto_N-S_REMOTE_VPN+FW+LB(V2)_TCP_PORT_574
+575  =====> service_insertion_shared_PaloAlto_N-S_REMOTE_VPN+FW+LB(V2)_HTTP_575
+576  =====> service_insertion_shared_PaloAlto_N-S_REMOTE_VPN+FW+LB(V2)_HTTPS_576
+
+############### END of PaloAlto scenarios ################################################
+
+
+# Haproxy Image, Only Loadbalancer: [577-600] 
+
+# E-W, only LB (version: 1) with project scope.
+577  =====> service_insertion_project_E-W_LB(V1)_TCP_PORT_577
+578  =====> service_insertion_project_E-W_LB(V1)_HTTP_578
+579  =====> service_insertion_project_E-W_LB(V1)_HTTPS_579
+
+# N-S, only LB (version: 1) with project scope.
+580  =====> service_insertion_project_N-S_LB(V1)_TCP_PORT_580
+581  =====> service_insertion_project_N-S_LB(V1)_HTTP_581
+582  =====> service_insertion_project_N-S_LB(V1)_HTTPS_582
+
+# E-W, only LB (version: 1) with sharable scope.
+583  =====> service_insertion_shared_E-W_LB(V1)_TCP_PORT_583
+584  =====> service_insertion_shared_E-W_LB(V1)_HTTP_584
+585  =====> service_insertion_shared_E-W_LB(V1)_HTTPS_585
+
+# N-S, only LB (version: 1) with sharable scope.
+586  =====> service_insertion_shared_N-S_LB(V1)_TCP_PORT_586
+587  =====> service_insertion_shared_N-S_LB(V1)_HTTP_587
+588  =====> service_insertion_shared_N-S_LB(V1)_HTTPS_588
+
+# E-W, only LB (version: 2) with project scope.
+589  =====> service_insertion_project_E-W_LB(V2)_TCP_PORT_589
+590  =====> service_insertion_project_E-W_LB(V2)_HTTP_590
+591  =====> service_insertion_project_E-W_LB(V2)_HTTPS_591
+
+# N-S, only LB (version: 2) with project scope.
+592  =====> service_insertion_project_N-S_LB(V2)_TCP_PORT_592
+593  =====> service_insertion_project_N-S_LB(V2)_HTTP_593
+594  =====> service_insertion_project_N-S_LB(V2)_HTTPS_594
+
+# E-W, only LB (version: 2) with sharable scope.
+595  =====> service_insertion_shared_E-W_LB(V2)_TCP_PORT_595
+596  =====> service_insertion_shared_E-W_LB(V2)_HTTP_596
+597  =====> service_insertion_shared_E-W_LB(V2)_HTTPS_597
+
+# N-S, only LB (version: 2) with sharable scope.
+598  =====> service_insertion_shared_N-S_LB(V2)_TCP_PORT_598
+599  =====> service_insertion_shared_N-S_LB(V2)_HTTP_599
+600  =====> service_insertion_shared_N-S_LB(V2)_HTTPS_600
+
+##############################################################################
+########### End test under feature "service_inserion" Scenarios ##############
+##############################################################################
+
+
+
+############################################################################
+GBP Resource update test cases. ||| Feature Name: resource_update
+############################################################################
+tc no             tc id
+======            ======
+tc_no: 1  ======> resource_update_node_fw_add_delete_1
+tc_no: 2  ======> resource_update_node_lb_update_2
+tc_no: 3  ======> resource_update_node_vpn_add_3
+tc_no: 4  ======> resource_update_node_vpn_delete_4
+tc_no: 5  ======> resource_update_spec_vpn_add_5
+tc_no: 6  ======> resource_update_spec_lb_delete_6
+tc_no: 7  ======> resource_update_action_lb_delete_7
+tc_no: 8  ======> resource_update_rule_fw_add_8
+tc_no: 9  ======> resource_update_rule_fw_delete_9
+tc_no: 10 ======> resource_update_prs_allow_rule_add_10
+tc_no: 11 ======> resource_update_prs_allow_rule_delete_11
+tc_no: 12 ======> resource_update_prs_lb_add_12
+tc_no: 13 ======> resource_update_prs_fw_add_13
+tc_no: 14 ======> resource_update_prs_fw_del_14
+tc_no: 15 ======> resource_update_ptg_prs_add_15
+
+################### End of gbp resources update tests ######################
+
+
+#############################################################################
+Network Services HA functionality test | Feature Name: services_ha:
+#############################################################################
+ tc no                           tc id
+ =====                        =============
+tc_no: 1   ==========>	Services_HA_VYOS_EW_FW(HA)_FailOver_FW_1
+tc_no: 2   ==========>	Services_HA_VYOS_EW_FW(HA)+LB_FailOver_FW_2
+tc_no: 3   ==========>	Services_HA_VYOS_EW_FW+LB(HA)_FailOver_LB_3
+tc_no: 4   ==========>	Services_HA_VYOS_EW_FW(HA)+LB(HA)_FailOver_FW_4
+tc_no: 5   ==========>	Services_HA_VYOS_EW_FW(HA)+LB(HA)_FailOver_LB_5
+tc_no: 6   ==========>	Services_HA_VYOS_EW_FW(HA)+LB(HA)_FailOver_All_6
+tc_no: 7   ==========>	Services_HA_VYOS_NS_FW(HA)_FailOver_FW_7
+tc_no: 8   ==========>	Services_HA_VYOS_NS_FW(HA)+LB_FailOver_FW_8
+tc_no: 9   ==========>	Services_HA_VYOS_NS_FW+LB(HA)_FailOver_LB_9
+tc_no: 10  ==========>	Services_HA_VYOS_NS_FW(HA)+LB(HA)_FailOver_FW_10
+tc_no: 11  ==========>	Services_HA_VYOS_NS_FW(HA)+LB(HA)_FailOver_LB_11
+tc_no: 12  ==========>	Services_HA_VYOS_NS_FW(HA)+LB(HA)_FailOver_All_12
+tc_no: 13  ==========>	Services_HA_VYOS_NS_REMOTE_VPN(HA)+FW(HA)_FailOver_VPN_13
+tc_no: 14  ==========>	Services_HA_VYOS_NS_REMOTE_VPN(HA)+FW(HA)+LB_FailOver_VPN_14
+tc_no: 15  ==========>	Services_HA_VYOS_NS_REMOTE_VPN+FW+LB(HA)_FailOver_LB_15
+tc_no: 16  ==========>	Services_HA_VYOS_NS_REMOTE_VPN(HA)+FW(HA)+LB(HA)_FailOver_VPN_16
+tc_no: 17  ==========>	Services_HA_VYOS_NS_REMOTE_VPN(HA)+FW(HA)+LB(HA)_FailOver_LB_17
+tc_no: 18  ==========>	Services_HA_VYOS_NS_REMOTE_VPN(HA)+FW(HA)+LB(HA)_FailOver_All_18
+tc_no: 19  ==========>	Services_HA_VYOS_NS_S2S_VPN(HA)+FW(HA)_FailOver_VPN_19
+tc_no: 20  ==========>	Services_HA_VYOS_NS_S2S_VPN(HA)+FW(HA)+LB_FailOver_VPN_20
+tc_no: 21  ==========>	Services_HA_VYOS_NS_S2S_VPN+FW+LB(HA)_FailOver_LB_21
+tc_no: 22  ==========>	Services_HA_VYOS_NS_S2S_VPN(HA)+FW(HA)+LB(HA)_FailOver_VPN_22
+tc_no: 23  ==========>	Services_HA_VYOS_NS_S2S_VPN(HA)+FW(HA)+LB(HA)_FailOver_LB_23
+tc_no: 24  ==========>	Services_HA_VYOS_NS_S2S_VPN(HA)+FW(HA)+LB(HA)_FailOver_All_24
+tc_no: 25  ==========>	Services_HA_ASAV_EW_FW(HA)_FailOver_FW_25
+tc_no: 26  ==========>	Services_HA_ASAV_EW_FW(HA)+LB_FailOver_FW_26
+tc_no: 27  ==========>	Services_HA_ASAV_EW_FW+LB(HA)_FailOver_LB_27
+tc_no: 28  ==========>	Services_HA_ASAV_EW_FW(HA)+LB(HA)_FailOver_FW_28
+tc_no: 29  ==========>	Services_HA_ASAV_EW_FW(HA)+LB(HA)_FailOver_LB_29
+tc_no: 30  ==========>	Services_HA_ASAV_EW_FW(HA)+LB(HA)_FailOver_All_30
+tc_no: 31  ==========>	Services_HA_ASAV_NS_FW(HA)_FailOver_FW_31
+tc_no: 32  ==========>	Services_HA_ASAV_NS_FW(HA)+LB_FailOver_FW_32
+tc_no: 33  ==========>	Services_HA_ASAV_NS_FW+LB(HA)_FailOver_LB_33
+tc_no: 34  ==========>	Services_HA_ASAV_NS_FW(HA)+LB(HA)_FailOver_FW_34
+tc_no: 35  ==========>	Services_HA_ASAV_NS_FW(HA)+LB(HA)_FailOver_LB_35
+tc_no: 36  ==========>	Services_HA_ASAV_NS_FW(HA)+LB(HA)_FailOver_All_36
+tc_no: 37  ==========>	Services_HA_ASAV_NS_REMOTE_VPN(HA)+FW(HA)_FailOver_VPN_37
+tc_no: 38  ==========>	Services_HA_ASAV_NS_REMOTE_VPN(HA)+FW(HA)+LB_FailOver_VPN_38
+tc_no: 39  ==========>	Services_HA_ASAV_NS_REMOTE_VPN+FW+LB(HA)_FailOver_LB_39
+tc_no: 40  ==========>	Services_HA_ASAV_NS_REMOTE_VPN(HA)+FW(HA)+LB(HA)_FailOver_VPN_40
+tc_no: 41  ==========>	Services_HA_ASAV_NS_REMOTE_VPN(HA)+FW(HA)+LB(HA)_FailOver_LB_41
+tc_no: 42  ==========>	Services_HA_ASAV_NS_REMOTE_VPN(HA)+FW(HA)+LB(HA)_FailOver_All_42
+tc_no: 43  ==========>	Services_HA_ASAV_NS_S2S_VPN(HA)+FW(HA)_FailOver_VPN_43
+tc_no: 44  ==========>	Services_HA_ASAV_NS_S2S_VPN(HA)+FW(HA)+LB_FailOver_VPN_44
+tc_no: 45  ==========>	Services_HA_ASAV_NS_S2S_VPN+FW+LB(HA)_FailOver_LB_45
+tc_no: 46  ==========>	Services_HA_ASAV_NS_S2S_VPN(HA)+FW(HA)+LB(HA)_FailOver_VPN_46
+tc_no: 47  ==========>	Services_HA_ASAV_NS_S2S_VPN(HA)+FW(HA)+LB(HA)_FailOver_LB_47
+tc_no: 48  ==========>	Services_HA_ASAV_NS_S2S_VPN(HA)+FW(HA)+LB(HA)_FailOver_All_48
+
+########################### End of services HA Scenarios #######################################
+
+
+
+###########################################################################
+Stress tests feature will execute tests belonging to different test
+features (e.g. service_insertion, services_ha, multiple_chain, gbp_cruds)
+in parallel, for applying stress on service controller, by doing several
+parallel service insertion.
+###########################################################################
+ 
+  (a). Running stress tests for test feature service_insertion.
+        stress tests [1-600] mapped to service_insertion tests[1-600]
+          e.g.
+          	1. stress_test(1-600)
+          	2. stress_test(1-10,56,555-600)
+
+  (b). Running stress tests for test feature services_ha.          	
+        stress tests[601-648] mapped to service_ha tests[1-48]
+        e.g. 
+            stress_test(601-648)
+
+  (c). Running stress tests for test feature multiple_chain
+       stress tests[649-678] mapped to multiple_chain tests[1-30]
+        e.g.
+             stress_test(649-678)
+  (d). Running stress tests for test feature gbp_crud.
+       stress tests[679-691] mapped to gbp_cruds tests[1-13]
+       e.g.
+          stress_test(679-691)
+          
+###################End of stress test scenarios ###############################
+
